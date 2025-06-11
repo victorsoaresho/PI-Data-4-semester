@@ -10,6 +10,7 @@ load_dotenv()
 MONGO_CONNECTION_STRING = os.getenv("MONGO_CONNECTION_STRING")
 MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
 MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_NAME")
+MONGO_COLLECTION_INPUT = os.getenv("MONGO_COLLECTION_INPUT")  # Valor padrão se não estiver definido
 
 # --- Configuração da API Open-Meteo ---
 # Valores que não são secretos podem continuar aqui ou ir para o .env também
