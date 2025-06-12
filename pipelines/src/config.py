@@ -12,6 +12,9 @@ MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
 MONGO_COLLECTION_NAME = os.getenv("MONGO_COLLECTION_NAME")
 MONGO_COLLECTION_INPUT = os.getenv("MONGO_COLLECTION_INPUT")  # Valor padrão se não estiver definido
 
+GOOGLE_SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME")
+GOOGLE_CREDENTIALS_PATH = os.getenv("GOOGLE_CREDENTIALS_PATH")
+
 # --- Configuração da API Open-Meteo ---
 # Valores que não são secretos podem continuar aqui ou ir para o .env também
 FRANCA_LATITUDE = -20.53

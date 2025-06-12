@@ -1,55 +1,6 @@
 import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression
-import matplotlib.pyplot as plt
-import seaborn as sns
-import os
-
-# --- Funções de Plotagem ---
-
-def plot_correlation_heatmap(df: pd.DataFrame, output_path: str):
-    """Gera e salva um heatmap da matriz de correlação."""
-    print("🎨 Gerando gráfico de correlação...")
-    plt.figure(figsize=(10, 8))
-    # Seleciona apenas colunas numéricas para a correlação
-    numeric_df = df.select_dtypes(include=np.number)
-    sns.heatmap(numeric_df.corr(), annot=True, cmap='coolwarm', fmt=".2f")
-    plt.title('Matriz de Correlação das Variáveis Climáticas')
-    plt.savefig(output_path, bbox_inches='tight')
-    plt.close()
-    print(f"✅ Gráfico de correlação salvo em: {output_path}")
-
-def plot_weather_code_distribution(df: pd.DataFrame, output_path: str):
-    """Gera e salva um gráfico de barras da distribuição dos códigos de clima."""
-    print("🎨 Gerando gráfico de distribuição de clima...")
-    plt.figure(figsize=(10, 8))
-    # Ordena as probabilidades para melhor visualização
-    plot_data = df.sort_values('probabilidade_percent', ascending=False)
-    sns.barplot(x='probabilidade_percent', y='codigo_clima', data=plot_data, orient='h', palette='viridis')
-    plt.title('Probabilidade de Ocorrência por Código de Clima')
-    plt.xlabel('Probabilidade (%)')
-    plt.ylabel('Código do Clima')
-    # Adiciona os valores nas barras
-    for index, value in enumerate(plot_data['probabilidade_percent']):
-        plt.text(value, index, f' {value:.2f}%')
-    plt.savefig(output_path, bbox_inches='tight')
-    plt.close()
-    print(f"✅ Gráfico de distribuição salvo em: {output_path}")
-
-def plot_temperature_forecast(hist_df: pd.DataFrame, forecast_df: pd.DataFrame, output_path: str):
-    """Gera e salva um gráfico da série histórica com a previsão de temperatura."""
-    print("🎨 Gerando gráfico de previsão de temperatura...")
-    plt.figure(figsize=(12, 6))
-    plt.plot(hist_df['dia'], hist_df['temperatura_max_c'], label='Temperatura Máxima Histórica', marker='o')
-    plt.plot(forecast_df['dia_previsto'], forecast_df['temperatura_max_prevista_c'], label='Previsão', linestyle='--', marker='x', color='red')
-    plt.title('Previsão de Temperatura Máxima')
-    plt.xlabel('Data')
-    plt.ylabel('Temperatura Máxima (°C)')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig(output_path, bbox_inches='tight')
-    plt.close()
-    print(f"✅ Gráfico de previsão salvo em: {output_path}")
 
 # --- Funções de Análise ---
 
@@ -73,6 +24,14 @@ def calculate_descriptive_stats(df: pd.DataFrame) -> pd.DataFrame:
     stats_df = desc_stats.reset_index().rename(columns={'index': 'metrica'})
     print("👍 Estatísticas calculadas.")
     return stats_df
+
+def calculate_correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
+    """Calcula a matriz de correlação para colunas numéricas e a formata."""
+    print("📊 Calculando a matriz de correlação...")
+    numeric_df = df.select_dtypes(include=np.number)
+    correlation_matrix = numeric_df.corr().reset_index().rename(columns={'index': 'variable'})
+    print("👍 Matriz de correlação calculada.")
+    return correlation_matrix
 
 def calculate_weather_code_probabilities(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula a probabilidade de ocorrência de cada código de clima."""

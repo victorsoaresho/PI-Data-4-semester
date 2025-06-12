@@ -3,6 +3,7 @@ libs/
 
 # Arquivos de configuração local e segredos
 .env
+credentials.json
 
 # Outros...
 __pycache__/
