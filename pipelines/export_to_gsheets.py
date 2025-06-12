@@ -13,7 +13,7 @@ from src.config import (
     GOOGLE_CREDENTIALS_PATH
 )
 
-METRICS_COLLECTION_NAME = MONGO_COLLECTION_NAME # Coleção onde as métricas estão salvas
+METRICS_COLLECTION_NAME = MONGO_COLLECTION_NAME
 
 def fetch_metrics_from_mongo() -> dict[str, pd.DataFrame]:
     """Busca as métricas da coleção no MongoDB e as converte em DataFrames."""

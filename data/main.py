@@ -30,7 +30,6 @@ def run_weather_etl():
         return
 
     # 3. Carregamento (Load)
-    # Usando o 'with' para garantir que a conexão com o banco seja aberta e fechada corretamente
     try:
         with MongoHandler(MONGO_CONNECTION_STRING, MONGO_DB_NAME) as mongo:
             mongo.overwrite_collection(MONGO_COLLECTION_NAME, weather_df)

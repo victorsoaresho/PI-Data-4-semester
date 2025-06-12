@@ -39,9 +39,3 @@ class OpenMeteoClient:
         except requests.exceptions.RequestException as e:
             print(f"Erro ao buscar dados da API: {e}")
             return None
-
-# Exemplo de uso:
-# client = OpenMeteoClient(latitude=-23.55, longitude=-46.64)
-# historical_data = client.get_daily_forecast()
-# if historical_data:
-#     print(historical_data)

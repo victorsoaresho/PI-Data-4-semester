@@ -3,10 +3,9 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 
 # --- Funções de Análise ---
-
 def calculate_descriptive_stats(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula estatísticas descritivas para colunas numéricas."""
-    print("📊 Calculando estatísticas descritivas...")
+    print("Calculando estatísticas descritivas...")
     # Garante que colunas importantes sejam numéricas, tratando erros
     numeric_cols = ['temperatura_max_c', 'temperatura_min_c', 'umidade_media_percent', 'indice_uv_max']
     for col in numeric_cols:
@@ -16,29 +15,31 @@ def calculate_descriptive_stats(df: pd.DataFrame) -> pd.DataFrame:
     df.dropna(subset=['temperatura_max_c', 'temperatura_min_c'], inplace=True)
 
     desc_stats = df[numeric_cols].describe().transpose()
+    
     # Adiciona moda, mediana e assimetria
     desc_stats['mode'] = df[numeric_cols].mode().iloc[0]
     desc_stats['median'] = df[numeric_cols].median()
     desc_stats['skew'] = df[numeric_cols].skew()
     
     stats_df = desc_stats.reset_index().rename(columns={'index': 'metrica'})
-    print("👍 Estatísticas calculadas.")
+    print("Estatísticas calculadas.")
     return stats_df
 
 def calculate_correlation_matrix(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula a matriz de correlação para colunas numéricas e a formata."""
-    print("📊 Calculando a matriz de correlação...")
+    print("Calculando a matriz de correlação...")
     numeric_df = df.select_dtypes(include=np.number)
     correlation_matrix = numeric_df.corr().reset_index().rename(columns={'index': 'variable'})
-    print("👍 Matriz de correlação calculada.")
+    print("Matriz de correlação calculada.")
     return correlation_matrix
 
 def calculate_weather_code_probabilities(df: pd.DataFrame) -> pd.DataFrame:
     """Calcula a probabilidade de ocorrência de cada código de clima."""
-    print("📊 Calculando probabilidades dos códigos de clima...")
+    print("Calculando probabilidades dos códigos de clima...")
     probs = df['codigo_clima'].value_counts(normalize=True) * 100
     probs_df = probs.reset_index()
     probs_df.columns = ['codigo_clima', 'probabilidade_percent']
+    
     # Garante que o tipo de dado seja amigável para JSON/Mongo
     probs_df['codigo_clima'] = probs_df['codigo_clima'].astype(str)
     print("👍 Probabilidades calculadas.")
